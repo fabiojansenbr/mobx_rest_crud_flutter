@@ -23,12 +23,20 @@ class _CompaniesPageState extends State<CompaniesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Observer(
-          builder: (_) => companyController.companies.status ==
-                  FutureStatus.pending
-              ? Text('')
-              : Text('Companies - ${companyController.companies.value.length}'),
-        ),
+        title: Observer(builder: (_) {
+          if (companyController.companies.status == FutureStatus.pending) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (companyController.companies.status == FutureStatus.rejected) {
+            return Center(
+              child: Text('Erro ao obter companies'),
+            );
+          }
+          return Text(
+              'Companies - ${companyController.companies.value.length}');
+        }),
       ),
       body: Container(
         padding: EdgeInsets.all(30),

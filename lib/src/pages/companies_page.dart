@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:mobx_api_flutter/src/controllers/company_controller.dart';
 
 class CompaniesPage extends StatefulWidget {
@@ -23,35 +24,28 @@ class _CompaniesPageState extends State<CompaniesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Observer(
-          builder: (BuildContext context) {
-            return Text('Empresas - ${companyController.companies.length}');
-          },
+          builder: (_) => companyController.companies.status ==
+                  FutureStatus.pending
+              ? Text('')
+              : Text('Companies - ${companyController.companies.value.length}'),
         ),
       ),
       body: Container(
         padding: EdgeInsets.all(30),
         child: Observer(
-          builder: (BuildContext context) {
-            print('buildei o componente');
-            return (companyController.companies.length != 0 ||
-                    companyController.companies == null)
-                ? Observer(
-                    builder: (BuildContext context) {
-                      return ListView.builder(
-                        itemCount: companyController.companies.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final company = companyController.companies[index];
-                          return ListTile(
-                            title: Text(company.name),
-                          );
-                        },
-                      );
-                    },
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
-          },
+          builder: (_) =>
+              companyController.companies.status == FutureStatus.pending
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: companyController.companies.value.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final company =
+                            companyController.companies.value[index];
+                        return ListTile(
+                          title: Text(company.name),
+                        );
+                      },
+                    ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

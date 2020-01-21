@@ -9,7 +9,7 @@ abstract class _CompanyControllerBase with Store {
   CompanyRepository companyRepository = CompanyRepository();
 
   @observable
-  List<CompanyModel> companies = new ObservableList<CompanyModel>();
+  ObservableFuture<List<CompanyModel>> companies;
 
   @observable
   String name;
@@ -25,8 +25,7 @@ abstract class _CompanyControllerBase with Store {
 
   @action
   fetchCompanies() async {
-    companies = [];
-    companies = await companyRepository.getCompanies();
+    companies = companyRepository.getCompanies().asObservable();
   }
 
   @action

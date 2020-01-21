@@ -12,14 +12,14 @@ mixin _$CompanyController on _CompanyControllerBase, Store {
   final _$companiesAtom = Atom(name: '_CompanyControllerBase.companies');
 
   @override
-  List<CompanyModel> get companies {
+  ObservableFuture<List<CompanyModel>> get companies {
     _$companiesAtom.context.enforceReadPolicy(_$companiesAtom);
     _$companiesAtom.reportObserved();
     return super.companies;
   }
 
   @override
-  set companies(List<CompanyModel> value) {
+  set companies(ObservableFuture<List<CompanyModel>> value) {
     _$companiesAtom.context.conditionallyRunInAction(() {
       super.companies = value;
       _$companiesAtom.reportChanged();

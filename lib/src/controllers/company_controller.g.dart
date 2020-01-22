@@ -74,6 +74,20 @@ mixin _$CompanyController on _CompanyControllerBase, Store {
     return _$addCompanyAsyncAction.run(() => super.addCompany());
   }
 
+  final _$updateCompanyAsyncAction = AsyncAction('updateCompany');
+
+  @override
+  Future<dynamic> updateCompany(String id) {
+    return _$updateCompanyAsyncAction.run(() => super.updateCompany(id));
+  }
+
+  final _$deleteCompanyAsyncAction = AsyncAction('deleteCompany');
+
+  @override
+  Future<dynamic> deleteCompany(String id) {
+    return _$deleteCompanyAsyncAction.run(() => super.deleteCompany(id));
+  }
+
   final _$_CompanyControllerBaseActionController =
       ActionController(name: '_CompanyControllerBase');
 

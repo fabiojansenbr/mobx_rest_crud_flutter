@@ -33,4 +33,16 @@ abstract class _CompanyControllerBase with Store {
     await companyRepository.addCompany(name, email);
     fetchCompanies();
   }
+
+  @action
+  Future updateCompany(String id) async {
+    await companyRepository.updateCompany(id, name, email);
+    fetchCompanies();
+  }
+
+  @action
+  Future deleteCompany(String id) async {
+    await companyRepository.removeCompany(id);
+    fetchCompanies();
+  }
 }

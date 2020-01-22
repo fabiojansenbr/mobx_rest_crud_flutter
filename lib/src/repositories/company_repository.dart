@@ -26,4 +26,28 @@ class CompanyRepository {
 
     print(response.data);
   }
+
+  Future updateCompany(String id, String name, String email) async {
+    final bodyData = {'name': name, 'email': email};
+
+    var url = "https://codefirst.herokuapp.com/api/v1/companies/$id";
+
+    final headers = {'contentType': 'application/json'};
+
+    Response response = await Dio()
+        .put(url, data: bodyData, options: Options(headers: headers));
+
+    print(response.data);
+  }
+
+  Future removeCompany(String id) async {
+    var url = "https://codefirst.herokuapp.com/api/v1/companies/$id";
+
+    final headers = {'contentType': 'application/json'};
+
+    Response response =
+        await Dio().delete(url, options: Options(headers: headers));
+
+    print(response.data);
+  }
 }
